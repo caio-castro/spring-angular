@@ -1,4 +1,4 @@
-package com.example.dinheiroapi.exceptionhandler;
+package com.example.dinheiro.api.exceptionhandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

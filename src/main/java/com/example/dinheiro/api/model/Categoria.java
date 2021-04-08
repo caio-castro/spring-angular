@@ -1,4 +1,4 @@
-package com.example.dinheiroapi.model;
+package com.example.dinheiro.api.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
