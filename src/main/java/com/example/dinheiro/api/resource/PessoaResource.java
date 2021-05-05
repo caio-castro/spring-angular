@@ -8,14 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.catalina.startup.ClassLoaderFactory.Repository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,6 +29,7 @@ import com.example.dinheiro.api.event.RecursoCriadoEvent;
 import com.example.dinheiro.api.model.Categoria;
 import com.example.dinheiro.api.model.Pessoa;
 import com.example.dinheiro.api.repository.PessoaRepository;
+import com.example.dinheiro.api.service.PessoaService;
 
 
 
@@ -38,6 +42,9 @@ public class PessoaResource {
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private PessoaService pessoaService;
 	
 	@GetMapping
 	public List<Pessoa>listar(){
@@ -72,6 +79,13 @@ public class PessoaResource {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deletar(@PathVariable Long codigo) {
 		pessoaRepository.deleteById(codigo);
+	}
+	
+	@PutMapping("/{codigo}")
+	public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo, @Valid @RequestBody Pessoa pessoa){
+           Pessoa pessoaSalva = pessoaService.atualizar(codigo,pessoa);
+          
+		 return ResponseEntity.ok(pessoaSalva);
 	}
 	
 }
